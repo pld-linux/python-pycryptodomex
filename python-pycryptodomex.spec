@@ -6,8 +6,6 @@
 
 %define		module	pycryptodomex
 Summary:	Package of low-level cryptographic primitives
-Summary(pl.UTF-8):	-
-# Name must match the python module/package name (as on pypi or in 'import' statement)
 Name:		python-%{module}
 Version:	3.10.1
 Release:	1
@@ -37,18 +35,65 @@ Requires:	python-modules >= 1:2.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+PyCryptodomex is a fork of PyCrypto. It brings the following
+enhancements with respect to the last official version of PyCrypto
+(2.6.1):
 
-%description -l pl.UTF-8
+- Authenticated encryption modes (GCM, CCM, EAX, SIV, OCB)
+- Accelerated AES on Intel platforms via AES-NI
+- First class support for PyPy
+- Elliptic curves cryptography (NIST P-256, P-384 and P-521 curves
+  only)
+- Better and more compact API (nonce and iv attributes for ciphers,
+  automatic generation of random nonces and IVs, simplified CTR cipher
+  mode, and more)
+- SHA-3 (including SHAKE XOFs), truncated SHA-512 and BLAKE2 hash
+  algorithms
+- Salsa20 and ChaCha20/XChaCha20 stream ciphers
+- Poly1305 MAC
+- ChaCha20-Poly1305 and XChaCha20-Poly1305 authenticated ciphers
+- scrypt, bcrypt and HKDF derivation functions
+- Deterministic (EC)DSA
+- Password-protected PKCS#8 key containers
+- Shamir's Secret Sharing scheme
+- Random numbers get sourced directly from the OS (and not from a
+  CSPRNG in userspace)
+- Simplified install process, including better support for Windows
+- Cleaner RSA and DSA key generation (largely based on FIPS 186-4)
+- Major clean ups and simplification of the code base
 
 %package -n python3-%{module}
-Summary:	-
-Summary(pl.UTF-8):	-
+Summary:	Package of low-level cryptographic primitives
 Group:		Libraries/Python
 Requires:	python3-modules >= 1:3.2
 
 %description -n python3-%{module}
+PyCryptodomex is a fork of PyCrypto. It brings the following
+enhancements with respect to the last official version of PyCrypto
+(2.6.1):
 
-%description -n python3-%{module} -l pl.UTF-8
+- Authenticated encryption modes (GCM, CCM, EAX, SIV, OCB)
+- Accelerated AES on Intel platforms via AES-NI
+- First class support for PyPy
+- Elliptic curves cryptography (NIST P-256, P-384 and P-521 curves
+  only)
+- Better and more compact API (nonce and iv attributes for ciphers,
+  automatic generation of random nonces and IVs, simplified CTR cipher
+  mode, and more)
+- SHA-3 (including SHAKE XOFs), truncated SHA-512 and BLAKE2 hash
+  algorithms
+- Salsa20 and ChaCha20/XChaCha20 stream ciphers
+- Poly1305 MAC
+- ChaCha20-Poly1305 and XChaCha20-Poly1305 authenticated ciphers
+- scrypt, bcrypt and HKDF derivation functions
+- Deterministic (EC)DSA
+- Password-protected PKCS#8 key containers
+- Shamir's Secret Sharing scheme
+- Random numbers get sourced directly from the OS (and not from a
+  CSPRNG in userspace)
+- Simplified install process, including better support for Windows
+- Cleaner RSA and DSA key generation (largely based on FIPS 186-4)
+- Major clean ups and simplification of the code base
 
 %package apidocs
 Summary:	API documentation for Python %{module} module
@@ -64,9 +109,6 @@ Dokumentacja API modułu Pythona %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
-
-# fix #!/usr/bin/env python -> #!/usr/bin/python:
-#%{__sed} -i -e '1s,^#!.*python,#!%{__python},' %{name}.py
 
 %build
 %if %{with python2}
