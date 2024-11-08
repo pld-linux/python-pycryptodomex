@@ -8,19 +8,19 @@
 Summary:	Package of low-level cryptographic primitives
 Summary(pl.UTF-8):	Pakiet niskopoziomowych funkcji kryptograficznych
 Name:		python-%{module}
-Version:	3.19.0
+Version:	3.21.0
 Release:	1
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/p/pycryptodomex/%{module}-%{version}.tar.gz
-# Source0-md5:	0dc96e1ffb42c955d89c2ce3f3875c9c
+# Source0-md5:	1f75ba3b07402102857b5ed496f48718
 URL:		https://www.pycryptodome.org/
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.7
 BuildRequires:	python-setuptools
 %endif
 %if %{with python3}
-BuildRequires:	python3-devel >= 1:3.5
+BuildRequires:	python3-devel >= 1:3.6
 BuildRequires:	python3-setuptools
 %endif
 BuildRequires:	rpm-build >= 4.6
@@ -90,7 +90,7 @@ rozszerzenia w stosunku do ostatniej oficjalnej wersji PyCrypto
 Summary:	Package of low-level cryptographic primitives
 Summary(pl.UTF-8):	Pakiet niskopoziomowych funkcji kryptograficznych
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.5
+Requires:	python3-modules >= 1:3.6
 
 %description -n python3-%{module}
 PyCryptodomex is a fork of PyCrypto. It brings the following
