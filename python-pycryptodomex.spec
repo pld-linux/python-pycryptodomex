@@ -9,7 +9,7 @@ Summary:	Package of low-level cryptographic primitives
 Summary(pl.UTF-8):	Pakiet niskopoziomowych funkcji kryptograficznych
 Name:		python-%{module}
 Version:	3.21.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/p/pycryptodomex/%{module}-%{version}.tar.gz
