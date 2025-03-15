@@ -1,0 +1,62 @@
+--- pycryptodomex-3.21.0/src/libtom/tomcrypt_cfg.h~	2024-10-01 20:38:19.000000000 +0200
++++ pycryptodomex-3.21.0/src/libtom/tomcrypt_cfg.h	2025-03-15 20:10:58.343318371 +0100
+@@ -56,7 +56,7 @@
+  */
+ 
+ /* detect x86-32 machines somewhat */
+-#if !defined(__STRICT_ANSI__) && (defined(INTEL_CC) || (defined(_MSC_VER) && defined(WIN32)) || (defined(__GNUC__) && (defined(__DJGPP__) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__i386__))))
++#if !defined(__STRICT_ANSI__) && (defined(INTEL_CC) || (defined(_MSC_VER) && defined(WIN32)) || (defined(__GNUC__) && (defined(__DJGPP__) || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__i386__) || (defined(__x86_64__) && defined(__ILP32__)))))
+    #define ENDIAN_LITTLE
+    #define ENDIAN_32BITWORD
+    #define LTC_FAST
+--- pycryptodomex-3.21.0/src/libtom/tomcrypt_macros.h~	2024-10-01 20:38:19.000000000 +0200
++++ pycryptodomex-3.21.0/src/libtom/tomcrypt_macros.h	2025-03-15 20:17:39.763318304 +0100
+@@ -10,7 +10,7 @@
+ /* this is the "32-bit at least" data type 
+  * Re-define it to suit your platform but it must be at least 32-bits 
+  */
+-#if defined(__x86_64__) || (defined(__sparc__) && defined(__arch64__))
++#if (defined(__x86_64__) && !defined(__ILP32__)) || (defined(__sparc__) && defined(__arch64__))
+    typedef unsigned ulong32;
+ #else
+    typedef unsigned long ulong32;
+@@ -98,7 +98,7 @@
+ 
+ 
+ /* x86_64 processor */
+-#if !defined(LTC_NO_BSWAP) && (defined(__GNUC__) && defined(__x86_64__))
++#if !defined(LTC_NO_BSWAP) && (defined(__GNUC__) && (defined(__x86_64__) && !defined(__ILP32__)))
+ 
+ #define STORE64H(x, y)           \
+ asm __volatile__ (               \
+@@ -341,7 +341,7 @@
+ 
+ 
+ /* 64-bit Rotates */
+-#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && defined(__x86_64__) && !defined(LTC_NO_ASM)
++#if !defined(__STRICT_ANSI__) && defined(__GNUC__) && (defined(__x86_64__) && !defined(__ILP32__))  && !defined(LTC_NO_ASM)
+ 
+ static inline unsigned long ROL64(unsigned long word, int i)
+ {
+--- pycryptodomex-3.21.0/src/multiply.h~	2024-10-01 20:38:19.000000000 +0200
++++ pycryptodomex-3.21.0/src/multiply.h	2025-03-15 20:21:05.203318264 +0100
+@@ -15,7 +15,7 @@
+     oh = (uint64_t)(pr >> 64);  \
+     } while (0)
+ 
+-#elif defined(_MSC_VER) && (defined(_M_X64) || defined(__x86_64__))
++#elif defined(_MSC_VER) && (defined(_M_X64) || (defined(__x86_64__) && !defined(__ILP32__)))
+ 
+ #include <intrin.h>
+ #define DP_MULT(a,b,ol,oh) do { ol = _umul128(a,b,&oh); } while (0)
+--- pycryptodomex-3.21.0/src/multiply_64.c~	2024-10-01 20:38:19.000000000 +0200
++++ pycryptodomex-3.21.0/src/multiply_64.c	2025-03-15 20:21:49.423318250 +0100
+@@ -38,7 +38,7 @@
+ /**
+  * Add a 64-bit value x to y/sum_mid/sum_hi
+  */
+-#if defined(_MSC_VER) && (_MSC_VER>=1900) && (defined(_M_X64) || defined(__x86_64__))
++#if defined(_MSC_VER) && (_MSC_VER>=1900) && (defined(_M_X64) || (defined(__x86_64__) && !defined(__ILP32__))
+ 
+ #include <intrin.h>
+ #define ADD192(y, x) do {           \

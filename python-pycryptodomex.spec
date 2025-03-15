@@ -14,6 +14,7 @@ License:	BSD
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/p/pycryptodomex/%{module}-%{version}.tar.gz
 # Source0-md5:	1f75ba3b07402102857b5ed496f48718
+Patch0:		x32.patch
 URL:		https://www.pycryptodome.org/
 %if %{with python2}
 BuildRequires:	python-devel >= 1:2.7
@@ -158,6 +159,7 @@ Dokumentacja API modułu Pythona %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch -P 0 -p1
 
 # adjust for pycryptodomex
 %{__sed} -i -e 's,Crypto\.Util,Cryptodome.Util,' \
